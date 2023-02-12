@@ -23,7 +23,7 @@ namespace PApp.Controllers
             _dbc = dbc;
         }
                 
-        [HttpGet(Name = "SalesPeople")]
+        [HttpGet]
         public List<Salesperson> Get()
         {
             List<Salesperson> salesPpl;
