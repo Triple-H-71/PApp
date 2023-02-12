@@ -39,5 +39,37 @@ namespace PApp.Controllers
 
             return salesperson;            
         }
+
+        [HttpPut]
+        public Task<bool> UpdateSalesperson(Salesperson salesperson)
+        {
+            try
+            {
+                if (salesperson == null)
+                    return Task.FromResult(false);
+
+                var sql = @"UPDATE [dbo].[Salesperson] SET " +
+                           "   [FirstName] = '" + salesperson.FirstName + "'" +
+                           "   ,[Lastname] = '" + salesperson.LastName + "'" +
+                           "   ,[Address] =  '" + salesperson.Address + "'" +
+                           "   ,[Phone] =  '" + salesperson.Phone + "'" +
+                           "   ,[StartDate] =  '" + salesperson.StartDate + "'" +
+                           "   ,[TerminationDate] = '" + salesperson.TerminationDate + "'" +
+                           "   ,[Manager] = '" + salesperson.Manager + "'" +
+                           "   WHERE id=" + salesperson.Id;
+
+                using (var connection = new SqlConnection(_dbc.GetDatabaseName()))
+                {
+                    var affectedRows = connection.Execute(sql);
+
+                   // Console.WriteLine($"Affected Rows: {affectedRows}");
+                }
+                return Task.FromResult(true);
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(false);
+            }
+        }
     }
 }
