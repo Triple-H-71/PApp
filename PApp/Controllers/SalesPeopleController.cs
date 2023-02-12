@@ -26,18 +26,18 @@ namespace PApp.Controllers
         [HttpGet]
         public List<Salesperson> Get()
         {
-            List<Salesperson> salesPpl;
-            // var salesPpl = new List<Salesperson>();
+            List<Salesperson> salesperson;
+            
             using (var connection = new SqlConnection(_dbc.GetDatabaseName()))
             {
                 // Create a query that retrieves all books with an author name of "John Smith"    
                 var sql = "SELECT * FROM Salesperson";
 
                 // Use the Query method to execute the query and return a list of objects    
-                salesPpl = connection.Query<Salesperson>(sql).ToList();
+                salesperson = connection.Query<Salesperson>(sql).ToList();
             }
 
-            return salesPpl;            
+            return salesperson;            
         }
     }
 }
