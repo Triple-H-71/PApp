@@ -10,11 +10,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<PApp.IDBConnector, PApp.DBConnector>();
 
 var app = builder.Build();
-
+app.UseSwagger();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
+{    
     app.UseSwaggerUI();
 }
 

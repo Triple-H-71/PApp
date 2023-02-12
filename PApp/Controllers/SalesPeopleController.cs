@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 namespace PApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/")]
     public class SalesPeopleController : ControllerBase
     {      
 
