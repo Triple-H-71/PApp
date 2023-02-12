@@ -34,5 +34,35 @@ namespace PApp.Controllers
 
             return products;
         }
+        [HttpPut]
+        public Task<bool> UpdateProduct(Product product)
+        {
+            try
+            {
+                if (product == null)
+                    return Task.FromResult(false);
+
+                var sql = @"UPDATE [dbo].[Product] SET " +
+                           "   [Name] = '" + product.Name + "'" +
+                           "   ,[Manufacturer] = '" + product.Manufacturer + "'" +
+                           "   ,[Style] =  '" + product.Style + "'" +
+                           "   ,[PurchasePrice] =  '" + product.PurchasePrice + "'" +
+                           "   ,[QtyOnHand] =  '" + product.QtyOnHand + "'" +
+                           "   ,[CommissionPercentage] = '" + product.CommissionPercentage + "'" +                           
+                           "   WHERE id=" + product.Id;
+
+                using (var connection = new SqlConnection(_dbc.GetDatabaseName()))
+                {
+                    var affectedRows = connection.Execute(sql);
+
+                    // Console.WriteLine($"Affected Rows: {affectedRows}");
+                }
+                return Task.FromResult(true);
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(false);
+            }
+        }
     }
 }
