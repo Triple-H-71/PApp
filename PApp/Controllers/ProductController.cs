@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Dapper;
 using System.Diagnostics;
 using PApp.Models;
@@ -9,35 +9,30 @@ namespace PApp.Controllers
 {
     [EnableCors("MyPolicy")]
     [ApiController]
-    [Route("SalesPerson")]
-    public class SalesPeopleController : ControllerBase
-    {      
-
-        private readonly ILogger<SalesPeopleController> _logger;
+    [Route("Product")]
+    public class ProductController : ControllerBase
+    {
         private readonly IDBConnector _dbc;
-        
-
-        public SalesPeopleController(ILogger<SalesPeopleController> logger, IDBConnector dbc)
+        public ProductController(IDBConnector dbc)
         {
-            _logger = logger;
             _dbc = dbc;
         }
-                
-        [HttpGet(Name = "SalesPeople")]
-        public List<Salesperson> Get()
+
+        [HttpGet(Name = "Product")]
+        public List<Product> GetAllProducts()
         {
-            List<Salesperson> salesPpl;
+            List<Product> products;
             // var salesPpl = new List<Salesperson>();
             using (var connection = new SqlConnection(_dbc.GetDatabaseName()))
             {
                 // Create a query that retrieves all books with an author name of "John Smith"    
-                var sql = "SELECT * FROM Salesperson";
+                var sql = "SELECT * FROM Product";
 
                 // Use the Query method to execute the query and return a list of objects    
-                salesPpl = connection.Query<Salesperson>(sql).ToList();
+                products = connection.Query<Product>(sql).ToList();
             }
 
-            return salesPpl;            
+            return products;
         }
     }
 }
