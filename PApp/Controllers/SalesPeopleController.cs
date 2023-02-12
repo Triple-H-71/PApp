@@ -3,11 +3,13 @@ using Dapper;
 using System.Diagnostics;
 using PApp.Models;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Cors;
 
 namespace PApp.Controllers
 {
+    [EnableCors("MyPolicy")]
     [ApiController]
-    [Route("/")]
+    [Route("[controller]")]
     public class SalesPeopleController : ControllerBase
     {      
 
@@ -20,8 +22,8 @@ namespace PApp.Controllers
             _logger = logger;
             _dbc = dbc;
         }
-
-        [HttpGet(Name = "GetAllSalesPeople")]
+                
+        [HttpGet(Name = "SalesPeople")]
         public List<Salesperson> Get()
         {
             List<Salesperson> salesPpl;
