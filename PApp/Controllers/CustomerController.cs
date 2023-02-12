@@ -37,5 +37,36 @@ namespace PApp.Controllers
 
             return customers;
         }
+
+        [HttpPut]
+        public Task<bool> UpdateCustomer(Customer customer)
+        {
+            try
+            {
+                if (customer == null)
+                    return Task.FromResult(false);
+
+                var sql = @"UPDATE [dbo].[Customer] SET " +
+                           "   [ProductID] = '" + customer.ProductId + "'" +
+                           "   ,[FirstName] = '" + customer.FirstName + "'" +
+                           "   ,[LastName] =  '" + customer.LastName + "'" +
+                           "   ,[Address] =  '" + customer.Address + "'" +
+                           "   ,[Phone] =  '" + customer.Phone + "'" +
+                           "   ,[StartDate] = '" + customer.StartDate + "'" +                           
+                           "   WHERE id=" + customer.Id;
+
+                using (var connection = new SqlConnection(_dbc.GetDatabaseName()))
+                {
+                    var affectedRows = connection.Execute(sql);
+
+                    // Console.WriteLine($"Affected Rows: {affectedRows}");
+                }
+                return Task.FromResult(true);
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(false);
+            }
+        }
     }
 }
